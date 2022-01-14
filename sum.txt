@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="keywords" content="DIVIZORI"/>
+        <link rel="icon" href="000.png" type="image/png" sizes="16x16"/>
+        <title>SUMA DIVIZORI</title>
+        <style>
+            label{
+                width: 100px;
+                float: left;
+                padding-top: 20px;
+            }
+            input{
+                width: 350px;
+                padding: 12px 20px;
+                margin: 8px 0;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                display: inline-block;
+            }
+            output{
+                height: 30px;
+                display: block;
+                padding-top: 20px;
+            }
+            
+            fieldset{
+                border-radius: 5px;
+                background-color: #f2f2f2;
+                padding: 20px;
+                border: 1px solid lightgray;
+                width: 450px;
+                margin: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <br>
+        <form>
+            <fieldset>
+                
+                <div class="form-group">
+                    <label>NUMAR</label>
+                    <input type="number" class="prc" id="a"/>
+                </div>
+                
+                <div class="form-group">
+                    <output id="result" align="center"></output>
+                </div>
+            </fieldset>
+        </form>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $('.form-group').on('input','.prc',function(){
+                var i;
+                var n = parseFloat(document.getElementById('a').value);
+                var s=0;
+                
+                for(i=1;i<=n;i++){
+                    if(n%i==0){
+                        s=s+i;
+                    }
+                }
+                $('#result').text("SUMA DIVIZORILOR LUI "+n+" ESTE "+ s);
+
+            });
+        </script>
+    </body>
+</html>
