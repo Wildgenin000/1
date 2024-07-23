@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FORM</title>
+
+    <!-- css librarys -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!--  -->
+</head>
+
+<body class="w3-light-grey">
+
+    <!-- formular -->
+    <form class="w3-display-middle w3-third w3-container w3-card-4 w3-round-large" style="padding: 30px;" onsubmit="return validare()" method="post" action="signin.php">
+        <div class="mb-6">
+            <label for="username" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Username</label>
+            <input type="text" name="user" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div id="e1" class="text-red-500 text-sm"></div>
+        </div>
+        <div class="mb-6">
+            <label for="email" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Email</label>
+            <input type="text" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div id="e2" class="text-red-500 text-sm"></div>
+        </div>
+        <div class="mb-6">
+            <label for="password" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Password</label>
+            <input type="password" name="pswd" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div id="e3" class="text-red-500 text-sm"></div>
+        </div>
+        <div class="mb-6">
+            <label for="password" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Confirm password</label>
+            <input type="password" name="confirm" id="confirm" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div id="e4" class="text-red-500 text-sm"></div>
+        </div>
+        <button style="width: 100%;" type="submit" class="text-white text-md bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg w-full sm:w-auto px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    </form>
+    <!--  -->
+
+    <!-- scriptul de validare a datelor introduse in formular -->
+    <script>
+        function validare() {
+            let user = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let pass = document.getElementById("password").value;
+            let conf = document.getElementById("confirm").value;
+            var ok = 0;
+            if (user == "") {
+                document.getElementById("e1").innerHTML = "Username is rquired!";
+                ok = 1;
+            } else {
+                document.getElementById("e1").innerHTML = "";
+            }
+
+            if (email == '') {
+                document.getElementById("e2").innerHTML = 'Email is required!';
+                ok = 1;
+            } else {
+                if (validateEmail(email) == 0) {
+                    ok = 1;
+                    document.getElementById("e2").innerHTML = 'Invalid email address!';
+                } else {
+                    document.getElementById("e2").innerHTML = '';
+                }
+            }
+
+            if (pass == '') {
+                document.getElementById("e3").innerHTML = 'Password is required!';
+                ok = 1;
+            } else {
+                if (pass.length < 8) {
+                    document.getElementById("e3").innerHTML = 'The password must have at least 8 characters!';
+                    ok = 1;
+                } else {
+                    document.getElementById("e3").innerHTML = '';
+                }
+            }
+
+            if (conf == '') {
+                document.getElementById("e4").innerHTML = 'Confirm password is required!';
+                ok = 1;
+            } else {
+                if (conf != pass && pass != '') {
+                    document.getElementById("e4").innerHTML = 'Enter the same password!';
+                    ok = 1;
+                } else {
+                    document.getElementById("e4").innerHTML = '';
+                }
+            }
+
+            if (ok == 1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function validateEmail(email) {
+            let res = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            return res.test(email);
+        }
+    </script>
+    <!--  -->
+
+</body>
+
+</html>
