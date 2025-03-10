@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algorithm Visualizer</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles to supplement Bootstrap -->
+    <style>
+      :root {
+        --bs-primary: #0d6efd;
+        --bs-secondary: #6c757d;
+        --bs-success: #198754;
+        --bs-danger: #dc3545;
+        --bs-warning: #ffc107;
+        --bs-info: #0dcaf0;
+        --bs-light: #f8f9fa;
+        --bs-dark: #212529;
+      }
+
+      body.dark {
+        background-color: #212529;
+        color: #f8f9fa;
+      }
+
+      body.dark .card {
+        background-color: #343a40;
+        color: #f8f9fa;
+        border-color: #495057;
+      }
+
+      body.dark .card-header {
+        background-color: #2c3034;
+        border-color: #495057;
+      }
+
+      body.dark .form-control {
+        background-color: #343a40;
+        color: #f8f9fa;
+        border-color: #495057;
+      }
+
+      body.dark .form-control:focus {
+        background-color: #343a40;
+        color: #f8f9fa;
+      }
+
+      body.dark .navbar {
+        background-color: #343a40 !important;
+        border-color: #495057;
+      }
+
+      body.dark .navbar-brand,
+      body.dark .nav-link {
+        color: #f8f9fa !important;
+      }
+
+      body.dark .navbar-toggler {
+        border-color: #495057;
+      }
+
+      body.dark .navbar-toggler-icon {
+        filter: invert(1);
+      }
+
+      body.dark .btn-outline-secondary {
+        color: #f8f9fa;
+        border-color: #6c757d;
+      }
+
+      body.dark .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: #f8f9fa;
+      }
+
+      body.dark .alert-success {
+        background-color: #051b11;
+        color: #75b798;
+        border-color: #0f5132;
+      }
+
+      body.dark .alert-danger {
+        background-color: #2c0b0e;
+        color: #ea868f;
+        border-color: #842029;
+      }
+
+      .visualization-container {
+        height: 150px;
+        margin: 1rem 0;
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+      }
+
+      .bar {
+        background-color: var(--bs-primary);
+        width: 100%;
+        transition: height 0.2s ease;
+      }
+
+      .search-result {
+        display: none;
+      }
+
+      .search-result.found {
+        border-color: var(--bs-success);
+      }
+
+      .search-result.not-found {
+        border-color: var(--bs-danger);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="#"
+          >Algorithm Visualizer</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" data-tab="sorting"
+                >Sorting Algorithms</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-tab="searching"
+                >Searching Algorithms</a
+              >
+            </li>
+          </ul>
+          <button class="btn btn-outline-secondary" id="themeToggle">🌙</button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div class="tab-content active" id="sorting">
+        <h2 class="mb-3">Sorting Algorithms</h2>
+        <p class="lead mb-4">
+          Sorting algorithms arrange elements in a specific order, typically in
+          ascending or descending order.
+        </p>
+
+        <div class="row g-4">
+          <!-- Bubble Sort -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Bubble Sort</h5>
+                <span class="badge bg-secondary">O(n²)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Repeatedly steps through the list, compares adjacent elements
+                  and swaps them if they are in the wrong order.
+                </p>
+                <div class="visualization-container" id="bubbleSortViz"></div>
+                <div class="d-flex gap-2 mt-3">
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeBubbleSort()"
+                  >
+                    Visualize
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    onclick="resetArray('bubbleSortViz')"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Selection Sort -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Selection Sort</h5>
+                <span class="badge bg-secondary">O(n²)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Finds the minimum element and puts it at the beginning, then
+                  repeats for the remaining elements.
+                </p>
+                <div
+                  class="visualization-container"
+                  id="selectionSortViz"
+                ></div>
+                <div class="d-flex gap-2 mt-3">
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeSelectionSort()"
+                  >
+                    Visualize
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    onclick="resetArray('selectionSortViz')"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Insertion Sort -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Insertion Sort</h5>
+                <span class="badge bg-secondary">O(n²)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Builds the sorted array one item at a time by comparing each
+                  with the items before it.
+                </p>
+                <div
+                  class="visualization-container"
+                  id="insertionSortViz"
+                ></div>
+                <div class="d-flex gap-2 mt-3">
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeInsertionSort()"
+                  >
+                    Visualize
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    onclick="resetArray('insertionSortViz')"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Merge Sort -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Merge Sort</h5>
+                <span class="badge bg-secondary">O(n log n)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Divides the array into halves, sorts them recursively, then
+                  merges the sorted halves.
+                </p>
+                <div class="visualization-container" id="mergeSortViz"></div>
+                <div class="d-flex gap-2 mt-3">
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeMergeSort()"
+                  >
+                    Visualize
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    onclick="resetArray('mergeSortViz')"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Sort -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Quick Sort</h5>
+                <span class="badge bg-secondary">O(n log n)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Picks a pivot element and partitions the array around it, then
+                  recursively sorts the sub-arrays.
+                </p>
+                <div class="visualization-container" id="quickSortViz"></div>
+                <div class="d-flex gap-2 mt-3">
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeQuickSort()"
+                  >
+                    Visualize
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    onclick="resetArray('quickSortViz')"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Heap Sort -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Heap Sort</h5>
+                <span class="badge bg-secondary">O(n log n)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Builds a max heap from the array and repeatedly extracts the
+                  maximum element.
+                </p>
+                <div class="visualization-container" id="heapSortViz"></div>
+                <div class="d-flex gap-2 mt-3">
+                  <button class="btn btn-primary" onclick="visualizeHeapSort()">
+                    Visualize
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    onclick="resetArray('heapSortViz')"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Radix Sort -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Radix Sort</h5>
+                <span class="badge bg-secondary">O(nk)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Sorts numbers by processing individual digits, starting from
+                  the least significant digit.
+                </p>
+                <div class="visualization-container" id="radixSortViz"></div>
+                <div class="d-flex gap-2 mt-3">
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeRadixSort()"
+                  >
+                    Visualize
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    onclick="resetArray('radixSortViz')"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="searching" style="display: none">
+        <h2 class="mb-3">Searching Algorithms</h2>
+        <p class="lead mb-4">
+          Searching algorithms find the position of a target value within a data
+          structure.
+        </p>
+
+        <div class="row g-4">
+          <!-- Linear Search -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Linear Search</h5>
+                <span class="badge bg-secondary">O(n)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Sequentially checks each element until it finds the target
+                  value or reaches the end.
+                </p>
+                <div class="visualization-container" id="linearSearchViz"></div>
+                <div class="input-group mt-3 mb-3">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="linearSearchTarget"
+                    placeholder="Enter a number to search"
+                  />
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeLinearSearch()"
+                  >
+                    Search
+                  </button>
+                </div>
+                <button
+                  class="btn btn-secondary"
+                  onclick="resetArray('linearSearchViz')"
+                >
+                  Reset
+                </button>
+                <div
+                  class="alert mt-3 search-result"
+                  id="linearSearchResult"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Binary Search -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Binary Search</h5>
+                <span class="badge bg-secondary">O(log n)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Divides the sorted array in half repeatedly until it finds the
+                  target value.
+                </p>
+                <div class="visualization-container" id="binarySearchViz"></div>
+                <div class="input-group mt-3 mb-3">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="binarySearchTarget"
+                    placeholder="Enter a number to search"
+                  />
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeBinarySearch()"
+                  >
+                    Search
+                  </button>
+                </div>
+                <button
+                  class="btn btn-secondary"
+                  onclick="resetArray('binarySearchViz', true)"
+                >
+                  Reset
+                </button>
+                <div
+                  class="alert mt-3 search-result"
+                  id="binarySearchResult"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Jump Search -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <h5 class="card-title mb-0">Jump Search</h5>
+                <span class="badge bg-secondary">O(√n)</span>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Jumps ahead by fixed steps and then uses linear search to find
+                  the target value.
+                </p>
+                <div class="visualization-container" id="jumpSearchViz"></div>
+                <div class="input-group mt-3 mb-3">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="jumpSearchTarget"
+                    placeholder="Enter a number to search"
+                  />
+                  <button
+                    class="btn btn-primary"
+                    onclick="visualizeJumpSearch()"
+                  >
+                    Search
+                  </button>
+                </div>
+                <button
+                  class="btn btn-secondary"
+                  onclick="resetArray('jumpSearchViz', true)"
+                >
+                  Reset
+                </button>
+                <div
+                  class="alert mt-3 search-result"
+                  id="jumpSearchResult"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // DOM Elements
+      const themeToggle = document.getElementById("themeToggle");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      // Theme Toggle
+      themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        themeToggle.textContent = document.body.classList.contains("dark")
+          ? "☀️"
+          : "🌙";
+
+        // Store theme preference in localStorage
+        const isDarkMode = document.body.classList.contains("dark");
+        localStorage.setItem("darkMode", isDarkMode);
+      });
+
+      // Check for saved theme preference
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedDarkMode = localStorage.getItem("darkMode") === "true";
+        if (savedDarkMode) {
+          document.body.classList.add("dark");
+          themeToggle.textContent = "☀️";
+        }
+      });
+
+      // Tab Switching
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const tabId = link.getAttribute("data-tab");
+
+          // Update active tab
+          navLinks.forEach((t) => t.classList.remove("active"));
+          link.classList.add("active");
+
+          // Show corresponding content
+          tabContents.forEach((content) => {
+            if (content.id === tabId) {
+              content.style.display = "block";
+            } else {
+              content.style.display = "none";
+            }
+          });
+
+          // Close mobile menu after tab selection
+          const navbarCollapse = document.getElementById("navbarNav");
+          const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+          if (bsCollapse) {
+            bsCollapse.hide();
+          }
+        });
+      });
+
+      // Array Utilities
+      function generateRandomArray(size = 20, max = 100) {
+        return Array.from(
+          { length: size },
+          () => Math.floor(Math.random() * max) + 5
+        );
+      }
+
+      function generateSortedArray(size = 20, max = 100) {
+        const arr = generateRandomArray(size, max);
+        return arr.sort((a, b) => a - b);
+      }
+
+      // Visualization Utilities
+      function createBars(containerId, array, sorted = false) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+
+        const maxValue = Math.max(...array);
+
+        array.forEach((value) => {
+          const bar = document.createElement("div");
+          bar.className = "bar";
+          bar.style.height = `${(value / maxValue) * 100}%`;
+          container.appendChild(bar);
+        });
+
+        return container.querySelectorAll(".bar");
+      }
+
+      function resetArray(containerId, sorted = false) {
+        const array = sorted ? generateSortedArray() : generateRandomArray();
+        createBars(containerId, array);
+
+        // Reset search results if applicable
+        const resultId = containerId.replace("Viz", "Result");
+        const resultElement = document.getElementById(resultId);
+        if (resultElement) {
+          resultElement.style.display = "none";
+          resultElement.textContent = "";
+          resultElement.classList.remove("alert-success", "alert-danger");
+        }
+
+        return array;
+      }
+
+      function updateBars(bars, array, indices = []) {
+        const maxValue = Math.max(...array);
+
+        bars.forEach((bar, index) => {
+          bar.style.height = `${(array[index] / maxValue) * 100}%`;
+          bar.style.backgroundColor = indices.includes(index)
+            ? "var(--bs-danger)"
+            : "var(--bs-primary)";
+        });
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      // Initialize visualizations
+      window.onload = function () {
+        // Initialize sorting visualizations
+        resetArray("bubbleSortViz");
+        resetArray("selectionSortViz");
+        resetArray("insertionSortViz");
+        resetArray("mergeSortViz");
+        resetArray("quickSortViz");
+        resetArray("heapSortViz");
+        resetArray("radixSortViz");
+
+        // Initialize searching visualizations
+        resetArray("linearSearchViz");
+        resetArray("binarySearchViz", true);
+        resetArray("jumpSearchViz", true);
+      };
+
+      // Sorting Algorithms
+      async function bubbleSort(array, bars) {
+        const n = array.length;
+        let swapped;
+
+        for (let i = 0; i < n; i++) {
+          swapped = false;
+
+          for (let j = 0; j < n - i - 1; j++) {
+            // Highlight current comparison
+            updateBars(bars, array, [j, j + 1]);
+            await sleep(50);
+
+            if (array[j] > array[j + 1]) {
+              // Swap elements
+              [array[j], array[j + 1]] = [array[j + 1], array[j]];
+              updateBars(bars, array, [j, j + 1]);
+              swapped = true;
+              await sleep(50);
+            }
+          }
+
+          // If no swapping occurred in this pass, array is sorted
+          if (!swapped) break;
+        }
+
+        // Final update without highlights
+        updateBars(bars, array);
+        return array;
+      }
+
+      async function selectionSort(array, bars) {
+        const n = array.length;
+
+        for (let i = 0; i < n - 1; i++) {
+          let minIndex = i;
+
+          // Highlight current position
+          updateBars(bars, array, [i]);
+          await sleep(100);
+
+          for (let j = i + 1; j < n; j++) {
+            // Highlight comparison
+            updateBars(bars, array, [minIndex, j]);
+            await sleep(50);
+
+            if (array[j] < array[minIndex]) {
+              minIndex = j;
+              updateBars(bars, array, [minIndex]);
+              await sleep(50);
+            }
+          }
+
+          // Swap if needed
+          if (minIndex !== i) {
+            [array[i], array[minIndex]] = [array[minIndex], array[i]];
+            updateBars(bars, array, [i, minIndex]);
+            await sleep(100);
+          }
+        }
+
+        // Final update without highlights
+        updateBars(bars, array);
+        return array;
+      }
+
+      async function insertionSort(array, bars) {
+        const n = array.length;
+
+        for (let i = 1; i < n; i++) {
+          const key = array[i];
+          let j = i - 1;
+
+          // Highlight current element
+          updateBars(bars, array, [i]);
+          await sleep(100);
+
+          while (j >= 0 && array[j] > key) {
+            // Shift elements
+            array[j + 1] = array[j];
+            updateBars(bars, array, [j, j + 1]);
+            await sleep(50);
+            j--;
+          }
+
+          array[j + 1] = key;
+          updateBars(bars, array, [j + 1]);
+          await sleep(100);
+        }
+
+        // Final update without highlights
+        updateBars(bars, array);
+        return array;
+      }
+
+      async function mergeSort(array, bars, start = 0, end = array.length - 1) {
+        if (start >= end) return;
+
+        const mid = Math.floor((start + end) / 2);
+
+        // Recursively sort both halves
+        await mergeSort(array, bars, start, mid);
+        await mergeSort(array, bars, mid + 1, end);
+
+        // Merge the sorted halves
+        await merge(array, bars, start, mid, end);
+
+        return array;
+      }
+
+      async function merge(array, bars, start, mid, end) {
+        const leftSize = mid - start + 1;
+        const rightSize = end - mid;
+
+        // Create temporary arrays
+        const leftArray = array.slice(start, mid + 1);
+        const rightArray = array.slice(mid + 1, end + 1);
+
+        let i = 0,
+          j = 0,
+          k = start;
+
+        // Merge the arrays back
+        while (i < leftSize && j < rightSize) {
+          // Highlight comparison
+          updateBars(bars, array, [start + i, mid + 1 + j]);
+          await sleep(50);
+
+          if (leftArray[i] <= rightArray[j]) {
+            array[k] = leftArray[i];
+            i++;
+          } else {
+            array[k] = rightArray[j];
+            j++;
+          }
+
+          updateBars(bars, array, [k]);
+          await sleep(50);
+          k++;
+        }
+
+        // Copy remaining elements
+        while (i < leftSize) {
+          array[k] = leftArray[i];
+          updateBars(bars, array, [k]);
+          await sleep(50);
+          i++;
+          k++;
+        }
+
+        while (j < rightSize) {
+          array[k] = rightArray[j];
+          updateBars(bars, array, [k]);
+          await sleep(50);
+          j++;
+          k++;
+        }
+
+        // Update visualization
+        updateBars(
+          bars,
+          array,
+          Array.from({ length: end - start + 1 }, (_, idx) => start + idx)
+        );
+        await sleep(100);
+      }
+
+      async function quickSort(array, bars, low = 0, high = array.length - 1) {
+        if (low < high) {
+          // Partition the array and get the pivot index
+          const pivotIndex = await partition(array, bars, low, high);
+
+          // Recursively sort the sub-arrays
+          await quickSort(array, bars, low, pivotIndex - 1);
+          await quickSort(array, bars, pivotIndex + 1, high);
+        }
+
+        return array;
+      }
+
+      async function partition(array, bars, low, high) {
+        // Choose the rightmost element as pivot
+        const pivot = array[high];
+        let i = low - 1;
+
+        // Highlight pivot
+        updateBars(bars, array, [high]);
+        await sleep(100);
+
+        for (let j = low; j < high; j++) {
+          // Highlight current comparison
+          updateBars(bars, array, [j, high]);
+          await sleep(50);
+
+          if (array[j] <= pivot) {
+            i++;
+            // Swap elements
+            [array[i], array[j]] = [array[j], array[i]];
+            updateBars(bars, array, [i, j]);
+            await sleep(50);
+          }
+        }
+
+        // Place pivot in its correct position
+        [array[i + 1], array[high]] = [array[high], array[i + 1]];
+        updateBars(bars, array, [i + 1, high]);
+        await sleep(100);
+
+        return i + 1;
+      }
+
+      async function heapSort(array, bars) {
+        const n = array.length;
+
+        // Build max heap
+        for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+          await heapify(array, bars, n, i);
+        }
+
+        // Extract elements from heap one by one
+        for (let i = n - 1; i > 0; i--) {
+          // Move current root to end
+          [array[0], array[i]] = [array[i], array[0]];
+          updateBars(bars, array, [0, i]);
+          await sleep(100);
+
+          // Call heapify on the reduced heap
+          await heapify(array, bars, i, 0);
+        }
+
+        // Final update without highlights
+        updateBars(bars, array);
+        return array;
+      }
+
+      async function heapify(array, bars, n, i) {
+        let largest = i;
+        const left = 2 * i + 1;
+        const right = 2 * i + 2;
+
+        // Highlight current node and its children
+        const highlightIndices = [i];
+        if (left < n) highlightIndices.push(left);
+        if (right < n) highlightIndices.push(right);
+
+        updateBars(bars, array, highlightIndices);
+        await sleep(50);
+
+        // Check if left child is larger than root
+        if (left < n && array[left] > array[largest]) {
+          largest = left;
+        }
+
+        // Check if right child is larger than largest so far
+        if (right < n && array[right] > array[largest]) {
+          largest = right;
+        }
+
+        // If largest is not root
+        if (largest !== i) {
+          [array[i], array[largest]] = [array[largest], array[i]];
+          updateBars(bars, array, [i, largest]);
+          await sleep(50);
+
+          // Recursively heapify the affected sub-tree
+          await heapify(array, bars, n, largest);
+        }
+      }
+
+      async function radixSort(array, bars) {
+        // Find the maximum number to know number of digits
+        const max = Math.max(...array);
+
+        // Do counting sort for every digit
+        for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
+          await countingSort(array, bars, exp);
+        }
+
+        // Final update without highlights
+        updateBars(bars, array);
+        return array;
+      }
+
+      async function countingSort(array, bars, exp) {
+        const n = array.length;
+        const output = new Array(n).fill(0);
+        const count = new Array(10).fill(0);
+
+        // Store count of occurrences in count[]
+        for (let i = 0; i < n; i++) {
+          const digit = Math.floor(array[i] / exp) % 10;
+          count[digit]++;
+
+          // Highlight current element
+          updateBars(bars, array, [i]);
+          await sleep(30);
+        }
+
+        // Change count[i] so that count[i] contains actual
+        // position of this digit in output[]
+        for (let i = 1; i < 10; i++) {
+          count[i] += count[i - 1];
+        }
+
+        // Build the output array
+        for (let i = n - 1; i >= 0; i--) {
+          const digit = Math.floor(array[i] / exp) % 10;
+          output[count[digit] - 1] = array[i];
+          count[digit]--;
+
+          // Highlight current element
+          updateBars(bars, array, [i]);
+          await sleep(30);
+        }
+
+        // Copy the output array to array[]
+        for (let i = 0; i < n; i++) {
+          array[i] = output[i];
+          updateBars(bars, array, [i]);
+          await sleep(30);
+        }
+      }
+
+      // Searching Algorithms
+      async function linearSearch(array, target, bars) {
+        for (let i = 0; i < array.length; i++) {
+          // Highlight current element
+          updateBars(bars, array, [i]);
+          await sleep(100);
+
+          if (array[i] === target) {
+            // Found the target
+            updateBars(bars, array, [i]);
+            return i;
+          }
+        }
+
+        // Target not found
+        updateBars(bars, array);
+        return -1;
+      }
+
+      async function binarySearch(array, target, bars) {
+        let left = 0;
+        let right = array.length - 1;
+
+        while (left <= right) {
+          const mid = Math.floor((left + right) / 2);
+
+          // Highlight current search range
+          const highlightIndices = [left, mid, right];
+          updateBars(bars, array, highlightIndices);
+          await sleep(300);
+
+          if (array[mid] === target) {
+            // Found the target
+            updateBars(bars, array, [mid]);
+            return mid;
+          }
+
+          if (array[mid] < target) {
+            left = mid + 1;
+          } else {
+            right = mid - 1;
+          }
+        }
+
+        // Target not found
+        updateBars(bars, array);
+        return -1;
+      }
+
+      async function jumpSearch(array, target, bars) {
+        const n = array.length;
+        const step = Math.floor(Math.sqrt(n));
+
+        let prev = 0;
+
+        // Find the block where element is present (if it is)
+        while (array[Math.min(step, n) - 1] < target) {
+          // Highlight current block
+          const highlightIndices = Array.from(
+            { length: step },
+            (_, i) => prev + i
+          ).filter((i) => i < n);
+          updateBars(bars, array, highlightIndices);
+          await sleep(200);
+
+          prev = step;
+          step += Math.floor(Math.sqrt(n));
+
+          if (prev >= n) {
+            // Target not found
+            updateBars(bars, array);
+            return -1;
+          }
+        }
+
+        // Do a linear search for target in block
+        while (array[prev] < target) {
+          // Highlight current element
+          updateBars(bars, array, [prev]);
+          await sleep(100);
+
+          prev++;
+
+          if (prev === Math.min(step, n)) {
+            // Target not found
+            updateBars(bars, array);
+            return -1;
+          }
+        }
+
+        // If element is found
+        if (array[prev] === target) {
+          updateBars(bars, array, [prev]);
+          return prev;
+        }
+
+        // Target not found
+        updateBars(bars, array);
+        return -1;
+      }
+
+      // Visualization Functions
+      async function visualizeBubbleSort() {
+        const array = resetArray("bubbleSortViz");
+        const bars = document.querySelectorAll("#bubbleSortViz .bar");
+        await bubbleSort(array, bars);
+      }
+
+      async function visualizeSelectionSort() {
+        const array = resetArray("selectionSortViz");
+        const bars = document.querySelectorAll("#selectionSortViz .bar");
+        await selectionSort(array, bars);
+      }
+
+      async function visualizeInsertionSort() {
+        const array = resetArray("insertionSortViz");
+        const bars = document.querySelectorAll("#insertionSortViz .bar");
+        await insertionSort(array, bars);
+      }
+
+      async function visualizeMergeSort() {
+        const array = resetArray("mergeSortViz");
+        const bars = document.querySelectorAll("#mergeSortViz .bar");
+        await mergeSort(array, bars);
+      }
+
+      async function visualizeQuickSort() {
+        const array = resetArray("quickSortViz");
+        const bars = document.querySelectorAll("#quickSortViz .bar");
+        await quickSort(array, bars);
+      }
+
+      async function visualizeHeapSort() {
+        const array = resetArray("heapSortViz");
+        const bars = document.querySelectorAll("#heapSortViz .bar");
+        await heapSort(array, bars);
+      }
+
+      async function visualizeRadixSort() {
+        const array = resetArray("radixSortViz");
+        const bars = document.querySelectorAll("#radixSortViz .bar");
+        await radixSort(array, bars);
+      }
+
+      async function visualizeLinearSearch() {
+        const array = resetArray("linearSearchViz");
+        const bars = document.querySelectorAll("#linearSearchViz .bar");
+        const target = parseInt(
+          document.getElementById("linearSearchTarget").value
+        );
+
+        if (isNaN(target)) {
+          alert("Please enter a valid number");
+          return;
+        }
+
+        const result = await linearSearch(array, target, bars);
+        const resultElement = document.getElementById("linearSearchResult");
+
+        resultElement.style.display = "block";
+        if (result !== -1) {
+          resultElement.textContent = `Found ${target} at index ${result}`;
+          resultElement.classList.add("alert-success");
+          resultElement.classList.remove("alert-danger");
+        } else {
+          resultElement.textContent = `${target} not found in the array`;
+          resultElement.classList.add("alert-danger");
+          resultElement.classList.remove("alert-success");
+        }
+      }
+
+      async function visualizeBinarySearch() {
+        const array = resetArray("binarySearchViz", true);
+        const bars = document.querySelectorAll("#binarySearchViz .bar");
+        const target = parseInt(
+          document.getElementById("binarySearchTarget").value
+        );
+
+        if (isNaN(target)) {
+          alert("Please enter a valid number");
+          return;
+        }
+
+        const result = await binarySearch(array, target, bars);
+        const resultElement = document.getElementById("binarySearchResult");
+
+        resultElement.style.display = "block";
+        if (result !== -1) {
+          resultElement.textContent = `Found ${target} at index ${result}`;
+          resultElement.classList.add("alert-success");
+          resultElement.classList.remove("alert-danger");
+        } else {
+          resultElement.textContent = `${target} not found in the array`;
+          resultElement.classList.add("alert-danger");
+          resultElement.classList.remove("alert-success");
+        }
+      }
+
+      async function visualizeJumpSearch() {
+        const array = resetArray("jumpSearchViz", true);
+        const bars = document.querySelectorAll("#jumpSearchViz .bar");
+        const target = parseInt(
+          document.getElementById("jumpSearchTarget").value
+        );
+
+        if (isNaN(target)) {
+          alert("Please enter a valid number");
+          return;
+        }
+
+        const result = await jumpSearch(array, target, bars);
+        const resultElement = document.getElementById("jumpSearchResult");
+
+        resultElement.style.display = "block";
+        if (result !== -1) {
+          resultElement.textContent = `Found ${target} at index ${result}`;
+          resultElement.classList.add("alert-success");
+          resultElement.classList.remove("alert-danger");
+        } else {
+          resultElement.textContent = `${target} not found in the array`;
+          resultElement.classList.add("alert-danger");
+          resultElement.classList.remove("alert-success");
+        }
+      }
+    </script>
+  </body>
+</html>
